@@ -1,6 +1,5 @@
 from PIL import ImageGrab
 from pynput.mouse import Controller, Button
-from configparser import RawConfigParser
 import numpy as np
 import socket
 import sys

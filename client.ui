@@ -23,12 +23,12 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>控制端</string>
+   <string>受控端</string>
   </property>
   <widget class="QLineEdit" name="ip_lineEdit">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>160</x>
      <y>30</y>
      <width>200</width>
      <height>30</height>
@@ -45,9 +45,6 @@
      <width>200</width>
      <height>30</height>
     </size>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
    </property>
    <property name="text">
     <string/>
@@ -56,7 +53,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>30</y>
      <width>150</width>
      <height>30</height>
@@ -75,13 +72,13 @@
     </size>
    </property>
    <property name="text">
-    <string>控制端IP地址</string>
+    <string>主控电脑IP地址</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>90</y>
      <width>150</width>
      <height>30</height>
@@ -100,13 +97,13 @@
     </size>
    </property>
    <property name="text">
-    <string>控制端端口号</string>
+    <string>主控电脑端口号</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="port_lineEdit">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>160</x>
      <y>90</y>
      <width>200</width>
      <height>30</height>
@@ -180,7 +177,7 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;欢迎使用远程控制！&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;本台机器为即将进行远程控制的机器，本机ip地址已自动读取，请输入端口号！&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;本台机器为即将被远程控制的机器，请输入主控电脑的IP地址以及端口号！&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>

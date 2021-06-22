@@ -39,11 +39,8 @@ def deal_data(conn, addr):
     """
     处理客户端连接，打印并返回连接信息
     Args:
-        event:
-        x:
-        y:
-        flags:
-        param:
+        conn:客户端连接
+        addr:客户端地址
     """
     print('Accept new connection from {0}'.format(addr))
     conn.send('Hi, Welcome to the server!'.encode())
@@ -64,22 +61,29 @@ def deal_data(conn, addr):
     }
     window_name = addr[0]
     cv2.namedWindow(window_name)
+    #鼠标操作回调OnMouseMove函数
     cv2.setMouseCallback(window_name, OnMouseMove, param=param)
 
     while True:
+        #获取消息头长度
         encode_header_len = get_msg(conn, 4)
         if not encode_header_len:
             break
         msg_header_length = struct.unpack('i', encode_header_len)[0]
+        #获取消息头
         encode_header = get_msg(conn, msg_header_length)
         if not encode_header:
             break
+        #json读取消息头中的信息，含msg_length,msg_md5
         msg_header = json.loads(encode_header.decode())
+        #读取消息的图像数据
         img_data = recv_msg(conn, msg_header)
         if not img_data:
             break
+        #判断md5加密后的图像数据是否与消息头中md5加密后的字符串匹配
         if hashlib.md5(img_data).hexdigest() != msg_header['msg_md5']:
             break
+        #以uint8格式读入缓冲区的消息,cv2解析图片并显示
         msg_decode = np.frombuffer(img_data, np.uint8)
         img_decode = cv2.imdecode(msg_decode, cv2.IMREAD_COLOR)
 
@@ -93,6 +97,13 @@ def deal_data(conn, addr):
     conn.close()
 
 def get_msg(conn, length):
+    """
+    接收客户端消息
+    Args:
+        conn:客户端连接
+        addr:消息字节数
+    Returns:接收到客户端指定长度的消息
+    """
     try:
         return conn.recv(length)
     except socket.error as e:
@@ -100,6 +111,13 @@ def get_msg(conn, length):
 
 
 def recv_msg(conn, msg_header):
+    """
+    接收消息主体部分图像
+    Args:
+        conn:客户端连接
+        msg_header:json解析后的消息头
+    Returns:接收到的图像数据
+    """
     recv_size = 0
     img_data = b''
     while recv_size < msg_header['msg_length']:
@@ -114,13 +132,19 @@ def recv_msg(conn, msg_header):
 
 def OnMouseMove(event, x, y, flags, param):
     """
-    
+    鼠标移动时，给客户端发送鼠标位置信息
     Args:
-        event:
-        x:
-        y:
-        flags:
-        param:
+        event:鼠标事件
+        x:鼠标x轴坐标
+        y:鼠标y轴坐标
+        flags:按键flag。
+            1:cv2.EVENT_FLAG_LBUTTON
+            2:cv2.EVENT_FLAG_RBUTTON,
+            4:cv2.EVENT_FLAG_MBUTTON,
+            8:cv2.EVENT_FLAG_CTRLKEY,
+            16:cv2.EVENT_FLAG_SHIFTKEY,
+            32:cv2.EVENT_FLAG_ALTKEY,
+        param:默认参数
     """
     win32api.SetCursor(win32api.LoadCursor(0, win32con.IDC_ARROW ))
 
@@ -136,7 +160,7 @@ def OnMouseMove(event, x, y, flags, param):
         try:
             conn.send(struct.pack('i', len(json.dumps(msg))))
             conn.send(json.dumps(msg).encode())
-            # print('event: {},  x: {},  y: {}  flags: {}'.format(event, x, y, flags))
+            #print('event: {},  x: {},  y: {}  flags: {}'.format(event, x, y, flags))
         except socket.error as e:
             print(e)
 

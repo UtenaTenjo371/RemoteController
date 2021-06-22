@@ -26,6 +26,12 @@ class MyConfigParser(RawConfigParser):
 
 
 def socket_client(host, port):
+    """
+    与服务端建立连接
+    Args:
+        host:服务端地址
+        port:服务端端口号
+    """
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((host, port))
@@ -61,9 +67,12 @@ def socket_client(host, port):
 def make_screen_img(encode_param):
     try:
         screen = ImageGrab.grab()
-        bgr_img = cv2.cvtColor(np.array(screen), cv2.COLOR_RGB2BGR)  # 颜色空间转换, cv2.COLOR_RGB2BGR 将RGB格式转换成BGR格式
-        img = cv2.resize(bgr_img, resize)  # 缩放图片
-        return True, cv2.imencode(".jpg", img, encode_param)[1].tobytes()  # 把当前图片img按照jpg格式编码
+        #颜色空间转换, cv2.COLOR_RGB2BGR 将RGB格式转换成BGR格式
+        bgr_img = cv2.cvtColor(np.array(screen), cv2.COLOR_RGB2BGR)
+        #缩放图片
+        img = cv2.resize(bgr_img, resize)
+        #把当前图片img按照jpg格式编码
+        return True, cv2.imencode(".jpg", img, encode_param)[1].tobytes()
     except Exception as e:
         print(e)
         return False, None
@@ -138,6 +147,11 @@ def mouse_event(mouse, x, y, event, flags):
 
 
 def get_flag_event(value):
+    """
+    识别flag代表的事件
+    Args:
+        value:待识别的参数
+    """
     flags = [
         cv2.EVENT_FLAG_LBUTTON, # 1
         cv2.EVENT_FLAG_RBUTTON, # 2

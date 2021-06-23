@@ -23,6 +23,11 @@ class MyMainForm(QMainWindow, Ui_Dialog):
 		self.ok_Button.clicked.connect(self.getip)
 
 	def isIP(self,str):
+    """
+    判断输入是否为IP地址
+    Args:
+        str:输入字符串
+    """	
 		p = re.compile('^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$')
 		if p.match(str):
 			return True
@@ -30,6 +35,10 @@ class MyMainForm(QMainWindow, Ui_Dialog):
 			return False
 		
 	def getip(self):
+    """
+    获取用户输入的IP地址，判断是否为IP
+    获取用户输入的端口号，判断是否合法
+    """
 		host = self.ip_lineEdit.text()
 		port = self.port_lineEdit.text()
 		tag = False

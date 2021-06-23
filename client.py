@@ -151,6 +151,7 @@ def get_flag_event(value):
     识别flag代表的事件
     Args:
         value:待识别的参数
+    Returns:
     """
     flags = [
         cv2.EVENT_FLAG_LBUTTON, # 1

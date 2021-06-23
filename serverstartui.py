@@ -13,6 +13,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
+    """
+    server客户端ui界面
+    """
         Dialog.setObjectName("Dialog")
         Dialog.resize(600, 200)
         Dialog.setMinimumSize(QtCore.QSize(600, 200))

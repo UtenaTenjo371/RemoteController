@@ -14,6 +14,9 @@ import win32con
 def socket_service(host,port):
     """
     创建套接字，监听socket通信请求，可以挂起的最大连接数量为5。
+    Args:
+        host:本机ip地址
+        port:绑定端口号
     """
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

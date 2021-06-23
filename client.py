@@ -57,6 +57,12 @@ def socket_client(host, port):
     s.close()
 
 def make_screen_img(encode_param):
+    """
+    cv2捕捉屏幕画面
+    Args:
+        encode_param:编码参数
+    Returns:编码成jpg格式的屏幕图片
+    """
     try:
         screen = ImageGrab.grab()
         #颜色空间转换, cv2.COLOR_RGB2BGR 将RGB格式转换成BGR格式
@@ -71,10 +77,23 @@ def make_screen_img(encode_param):
 
 
 def get_msg_info(msg):
+    """
+    将发送给服务端的数据提取文件头
+    Args:
+        msg:待发送消息
+    Returns:消息长度,md5加密后的编码
+    """
     return len(msg), hashlib.md5(msg).hexdigest()
 
 
 def make_msg_header(msg_length, msg_md5):
+    """
+    制作JSON编码后的消息头
+    Args:
+        msg_length:消息长度
+        msg_md5:md5后加密的图片编码
+    Returns:json后的消息长度及md5编码后的图片
+    """
     header = {
         'msg_length': msg_length,
         'msg_md5': msg_md5
@@ -82,6 +101,13 @@ def make_msg_header(msg_length, msg_md5):
     return json.dumps(header).encode()
 
 def send_msg(conn, msg):
+    """
+    向服务端发送屏幕图像
+    Args:
+        conn:与服务端的连接
+        msg:待发送消息
+    Returns:发送消息是否成功
+    """
     msg_length, msg_md5 = get_msg_info(msg)
     msg_header = make_msg_header(msg_length, msg_md5)
     msg_header_length = struct.pack('i', len(msg_header))
@@ -96,6 +122,11 @@ def send_msg(conn, msg):
 
 
 def receive_mouse_msg(conn, ):
+    """
+    处理从服务端接收的鼠标信息
+    Args:
+        conn:与服务端的连接
+    """
     mouse = Controller()
     while True:
         try:
@@ -113,6 +144,14 @@ def receive_mouse_msg(conn, ):
     conn.close()
 
 def mouse_event(mouse, x, y, event, flags):
+    """
+    映射服务端传来的鼠标事件
+    Args:
+        event:鼠标事件
+        x:鼠标x轴坐标
+        y:鼠标y轴坐标
+        flags:按键flag
+    """
     flag_event = get_flag_event(flags)
     mouse.position = (x, y)
     # 鼠标左键
@@ -143,7 +182,7 @@ def get_flag_event(value):
     识别flag代表的事件
     Args:
         value:待识别的参数
-    Returns:
+    Returns:value参数代表的鼠标键盘事件
     """
     flags = [
         cv2.EVENT_FLAG_LBUTTON, # 1

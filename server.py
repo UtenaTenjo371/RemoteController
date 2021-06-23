@@ -11,10 +11,7 @@ import numpy as np
 import win32api
 import win32con
 
-host = '0.0.0.0'
-port = 8001
-
-def socket_service():
+def socket_service(host,port):
     """
     创建套接字，监听socket通信请求，可以挂起的最大连接数量为5。
     """

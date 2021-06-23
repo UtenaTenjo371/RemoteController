@@ -1,6 +1,5 @@
 from PIL import ImageGrab
 from pynput.mouse import Controller, Button
-from configparser import RawConfigParser
 import numpy as np
 import socket
 import sys
@@ -16,13 +15,6 @@ import threading
 
 resolution = (win32api.GetSystemMetrics(win32con.SM_CXSCREEN), win32api.GetSystemMetrics(win32con.SM_CYSCREEN))
 resize = (1400, 800)
-
-class MyConfigParser(RawConfigParser):
-    def __init__(self, defaults=None):
-        RawConfigParser.__init__(self, defaults=defaults)
-
-    def optionxform(self, option_str):
-        return option_str
 
 
 def socket_client(host, port):
@@ -170,8 +162,4 @@ def get_flag_event(value):
 
 
 if __name__ == '__main__':
-    config = MyConfigParser()
-    config.read('config.ini', encoding='utf-8')
-    server_host = config.get('Server', 'host')
-    server_port = config.getint('Server', 'port')
     socket_client(server_host, server_port)
